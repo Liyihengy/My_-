@@ -15,4 +15,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  server: {
+    port: 9090, // 默认启动端口
+    open: true, // 自动打开浏览器
+  cors: true, // 允许跨域
+  }
 })
