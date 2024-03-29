@@ -1,39 +1,18 @@
-# 个人作品集
 
-This template should help get you started developing with Vue 3 in Vite.
+使用模版为asorn-https://github.com/asorn/asorn-open个人博客开源版。
 
-## Recommended IDE Setup
+> 我的博客地址：
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Type Support for `.vue` Imports in TS
+该博客非常适用于设计师、开发者，用来呈现自己的作品、技术文章以及个人简历工作经历等。
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+该博客使用 html、css、vue 开发
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+---
 
-## Project Setup
+注意：
 
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-```
+- 但请不要直接用于商业用途；
+- 如果你同样崇尚开源精神，请为我们署个名吧（直接署名、代码注释、友链等任何形式）。
+- @asorn
