@@ -3,7 +3,7 @@ import headComponent from '@/components/head.vue'
 </script>
 
 <template>
-  <div class="body text-xs">
+  <div class="body text-xs h-100%">
     <headComponent />
     <router-view />
   </div>

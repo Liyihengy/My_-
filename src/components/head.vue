@@ -1,15 +1,24 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-// 头部导航菜单数据
-const menuList = ['Home', 'Work', 'Blog', 'About']
+import { computed, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router';
+
 
 // 控制动态样式
 // 用于存储活跃的li的索引
 const activeIndex = ref(0)
 
-// 点击赋值
-function handleActive(index: number) {
+// 点击赋值,控制active
+// 菜单与路由的映射关系
+
+const router = useRouter()
+
+// 头部导航菜单数据
+const menuList = ['Home', 'Work', 'Blog', 'About']
+function handleActive(index: number, routeName: string) {
+  // 记录索引
   activeIndex.value = index
+  router.push({ name: routeName.toLowerCase() });
+
 }
 
 // 控制 show 元素的透明度
@@ -19,7 +28,6 @@ function handleMouseMove(event: MouseEvent, index: number) {
   const element = event.target as HTMLElement
   if (!element)
     return
-
   // 获取位置信息
   const rect = element.getBoundingClientRect()
   const offsetX = event.clientX - rect.left
@@ -44,16 +52,17 @@ function handleMouseLeave(event: MouseEvent, index: number) {
       <img src="../assets/public/logo_text.svg" class="h-5">
       <ul gap-3>
         <template v-for="(item, index) in menuList" :key="index">
-          <li
-             class="magical btn rounded-full py-1.5 px-4 cursor-pointer"
-            :class="{ active: activeIndex === index }" @click="handleActive(index)"
-            @mousemove="handleMouseMove($event, index)" @mouseleave="handleMouseLeave($event, index)"
-          >
+          <li class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
+            @click="handleActive(index, item)" @mousemove="handleMouseMove($event, index)"
+            @mouseleave="handleMouseLeave($event, index)">
             {{ item }}
             <div class="show" :style="{ opacity: isHovered[index] ? 1 : 0 }" />
           </li>
         </template>
       </ul>
+    </div>
+    <div class="logo">
+      <img src="../assets/public/logo.svg">
     </div>
   </div>
 </template>
@@ -62,6 +71,8 @@ function handleMouseLeave(event: MouseEvent, index: number) {
 .head {
   position: fixed;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   background-color: $head-background-color;
   backdrop-filter: blur(4px);
@@ -121,6 +132,7 @@ function handleMouseLeave(event: MouseEvent, index: number) {
         // 选中样式
         &.active {
           background-color: $btn-bgc-active-color;
+
           &::after {
             background-color: #6361DC
           }
@@ -138,6 +150,43 @@ function handleMouseLeave(event: MouseEvent, index: number) {
     pointer-events: none;
     background: radial-gradient(var(--circle-size) circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.01), transparent 40%);
     /* hover fill */
+  }
+
+  .logo {
+    position: absolute;
+    inset: calc(20px + 56px) 0 0;
+    display: block;
+    font-size: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    img {
+      margin-bottom: 10px;
+      animation: rotate 6s linear infinite;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: url(../assets/public/head_bottom_line.svg) no-repeat center top;
+      z-index: -1
+    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
