@@ -1,13 +1,10 @@
-
 使用模版为asorn-https://github.com/asorn/asorn-open个人博客开源版。
 
 > 我的博客地址：
 
-
 该博客非常适用于设计师、开发者，用来呈现自己的作品、技术文章以及个人简历工作经历等。
 
-该博客使用 html、css、vue 开发
-
+该博客使用 html、css、vue3 开发
 
 ---
 

@@ -15,6 +15,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/styles/index.scss";`,
+      },
+    },
+  },
   server: {
     port: 9090, // 默认启动端口
     open: true, // 自动打开浏览器
