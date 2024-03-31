@@ -1,15 +1,8 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import {  ref } from 'vue'
 import { useRouter } from 'vue-router'
-// 获取li元素
-const liList = ref<HTMLElement[]>([])
-onMounted(() => {
-  liList.value = Array.from(document.querySelectorAll('.magical'))
-})
-onUnmounted(() => {
-  liList.value = []
-})
-
+import useMousePosition from '@/hook/mouse-position'
+const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.magical');
 const router = useRouter()
 
 // 控制动态样式
@@ -23,43 +16,6 @@ function handleActive(index: number, routeName: string) {
   activeIndex.value = index
   router.push({ name: routeName.toLowerCase() })
 }
-
-
-// 设置位置
-const mousePositions = reactive<Record<number, { x: number, y: number }>>({})
-function setMousePosition(index: number, x: number, y: number) {
-  mousePositions[index] = { x, y }
-}
-// 处理鼠标移动事件
-function handleMouseMove(event: MouseEvent) {
-  liList.value.forEach((liItem, index) => {
-    const rect = liItem.getBoundingClientRect()
-    setMousePosition(index, event.clientX - rect.left, event.clientY - rect.top)
-  })
-}
-
-// 动态返回一个对象
-function liStyle(index: number) {
-  // 获取当前悬停元素位置
-  const pos = mousePositions[index]
-  if (pos) {
-    return {
-      '--mouse-x': pos ? `${pos.x}px` : '0px',
-      '--mouse-y': pos ? `${pos.y}px` : '0px',
-    }
-  }
-}
-
-function resetMousePosition(index: number) {
-  mousePositions[index] = { x: -100, y: -100 }
-}
-
-// 处理鼠标离开事件
-function handleMouseLeave() {
-  liList.value.forEach((_, index) => {
-    resetMousePosition(index)
-  })
-}
 </script>
 
 <template>
@@ -69,7 +25,7 @@ function handleMouseLeave() {
       <ul gap-3 @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
         <template v-for="(item, index) in menuList" :key="index">
           <li class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
-            @click="handleActive(index, item)" :style="liStyle(index)">
+            :style="elementStyle(index)" @click="handleActive(index, item)">
             {{ item }}
             <div class="show" />
           </li>
@@ -172,8 +128,6 @@ function handleMouseLeave() {
       }
     }
   }
-
-
 
   .logo {
     position: absolute;

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Typed } from '@duskmoon/vue3-typed-js'
 import type { TypedOptions } from '@duskmoon/vue3-typed-js'
-import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import {  ref } from 'vue'
 import figmaIcon from '@/assets/index/figma.png'
+import useMousePosition from '@/hook/mouse-position'
 
 const options: TypedOptions = {
   strings: [
@@ -39,55 +40,8 @@ const cardList = ref([
   },
 ])
 
-// 用来动态存储鼠标位置
-const mousePositions = reactive<Record<number, { x: number, y: number }>>({})
-
-// 存储dom对象
-const cards = ref<HTMLElement[]>([])
-// 获取dom
-onMounted(() => {
-  cards.value = Array.from(document.querySelectorAll('.card'))
-})
-// 卸载移除
-onUnmounted(() => {
-  cards.value = []
-})
-
-// 遍历出来设置样式
-function setMousePosition(index: number, x: number, y: number) {
-  mousePositions[index] = { x, y }
-}
-
-// 处理鼠标移动事件
-function handleMouseMove(event: MouseEvent) {
-  cards.value.forEach((card, index) => {
-    const rect = card.getBoundingClientRect()
-    setMousePosition(index, event.clientX - rect.left, event.clientY - rect.top)
-  })
-}
-
-// 动态返回一个对象
-function cardStyle(index: number) {
-  // 获取当前悬停元素位置
-  const pos = mousePositions[index]
-  if (pos) {
-    return {
-      '--mouse-x': pos ? `${pos.x}px` : '0px',
-      '--mouse-y': pos ? `${pos.y}px` : '0px',
-    }
-  }
-}
-
-function resetMousePosition(index: number) {
-  mousePositions[index] = { x: -100, y: -100 }
-}
-
-// 处理鼠标离开事件
-function handleMouseLeave() {
-  cards.value.forEach((_, index) => {
-    resetMousePosition(index)
-  })
-}
+// 调用hook获取方法
+const { handleMouseMove, handleMouseLeave, elementStyle, } = useMousePosition('.card')
 </script>
 
 <template>
@@ -113,7 +67,7 @@ function handleMouseLeave() {
       <div class="loader" />
       <div class="link-card w-full" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
         <template v-for="(item, index) in cardList" :key="index">
-          <div class="card w-full cursor-pointer" :style="cardStyle(index)">
+          <div class="card w-full cursor-pointer" :style="elementStyle(index)">
             <div class="card-box  flex gap-3  items-center p-4 w-full">
               <img :src="item.icon" alt="Icon" class="w-10 opacity-60">
               <div class="info w-full text-sm">
@@ -306,10 +260,10 @@ function handleMouseLeave() {
           }
 
           .card-box {
-          i {
-            opacity: .6;
+            i {
+              opacity: .6;
+            }
           }
-        }
         }
       }
     }
