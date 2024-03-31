@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import {  ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import useMousePosition from '@/hook/mouse-position'
-const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.magical');
+
+const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.magical')
 const router = useRouter()
 
 // 控制动态样式
@@ -24,8 +25,10 @@ function handleActive(index: number, routeName: string) {
       <img src="../assets/public/logo_text.svg" class="h-5">
       <ul gap-3 @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
         <template v-for="(item, index) in menuList" :key="index">
-          <li class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
-            :style="elementStyle(index)" @click="handleActive(index, item)">
+          <li
+            class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
+            :style="elementStyle(index)" @click="handleActive(index, item)"
+          >
             {{ item }}
             <div class="show" />
           </li>
@@ -39,6 +42,8 @@ function handleActive(index: number, routeName: string) {
 </template>
 
 <style lang="scss" scoped>
+@use '../styles/public-mixin.scss' as *;
+
 .head {
   position: fixed;
   display: flex;
@@ -77,16 +82,8 @@ function handleActive(index: number, routeName: string) {
         // hover border
         &::before,
         &::after {
-          content: '';
-          position: absolute;
-          // 原有的高度上加2
-          width: calc(100% + var(--inset)* 2);
-          height: calc(100% + var(--inset)* 2);
-          // 这里是befalor和after的样式
+          @include afterBefore-public-styles;
           border-radius: var(--border);
-          // 所有四边均向外偏移1像素
-          inset: calc(0 - var(--inset));
-          z-index: -1;
         }
 
         // 高光boder

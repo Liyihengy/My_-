@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Typed } from '@duskmoon/vue3-typed-js'
 import type { TypedOptions } from '@duskmoon/vue3-typed-js'
-import {  ref } from 'vue'
+import { ref } from 'vue'
 import figmaIcon from '@/assets/index/figma.png'
 import useMousePosition from '@/hook/mouse-position'
 
@@ -41,7 +41,7 @@ const cardList = ref([
 ])
 
 // 调用hook获取方法
-const { handleMouseMove, handleMouseLeave, elementStyle, } = useMousePosition('.card')
+const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.card')
 </script>
 
 <template>
@@ -89,6 +89,7 @@ const { handleMouseMove, handleMouseLeave, elementStyle, } = useMousePosition('.
 </template>
 
 <style lang="scss" scoped>
+@use '../../styles/public-mixin.scss' as *;
 .home {
   display: flex;
   flex-direction: column;
@@ -220,14 +221,8 @@ const { handleMouseMove, handleMouseLeave, elementStyle, } = useMousePosition('.
         // hover border
         &::before,
         &::after {
-          content: '';
-          position: absolute;
-          // 原有的高度上加2
-          width: calc(100% + var(--inset)* 2);
-          height: calc(100% + var(--inset)* 2);
-          // 所有四边均向外偏移1像素
           border-radius: var(--border);
-          inset: calc(0 - var(--inset));
+          @include afterBefore-public-styles;
         }
 
         // hoverBoder 渐变

@@ -1,0 +1,17 @@
+$circle-size: 100px;
+$inset: 1px;
+$border: 9999px;
+
+
+@mixin afterBefore-public-styles {
+  content: '';
+  position: absolute;
+  // 原有的高度上加2
+  width: calc(100% + #{$inset}* 2);
+  height: calc(100% + #{$inset}* 2);
+  // 这里是befalor和after的样式
+  // 所有四边均向外偏移1像素
+  inset: calc(0 - #{$inset});
+  z-index: -1;
+}
+
