@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router';
-
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 // 控制动态样式
 // 用于存储活跃的li的索引
@@ -17,12 +16,12 @@ const menuList = ['Home', 'Work', 'Blog', 'About']
 function handleActive(index: number, routeName: string) {
   // 记录索引
   activeIndex.value = index
-  router.push({ name: routeName.toLowerCase() });
-
+  router.push({ name: routeName.toLowerCase() })
 }
 
 // 控制 show 元素的透明度
 const isHovered = reactive<Record<number, boolean>>({})
+
 // 处理鼠标移动事件
 function handleMouseMove(event: MouseEvent, index: number) {
   const element = event.target as HTMLElement
@@ -52,9 +51,11 @@ function handleMouseLeave(event: MouseEvent, index: number) {
       <img src="../assets/public/logo_text.svg" class="h-5">
       <ul gap-3>
         <template v-for="(item, index) in menuList" :key="index">
-          <li class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
+          <li
+            class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
             @click="handleActive(index, item)" @mousemove="handleMouseMove($event, index)"
-            @mouseleave="handleMouseLeave($event, index)">
+            @mouseleave="handleMouseLeave($event, index)"
+          >
             {{ item }}
             <div class="show" :style="{ opacity: isHovered[index] ? 1 : 0 }" />
           </li>
