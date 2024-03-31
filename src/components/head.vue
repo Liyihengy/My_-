@@ -1,15 +1,20 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+// 获取li元素
+const liList = ref<HTMLElement[]>([])
+onMounted(() => {
+  liList.value = Array.from(document.querySelectorAll('.magical'))
+})
+onUnmounted(() => {
+  liList.value = []
+})
+
+const router = useRouter()
 
 // 控制动态样式
 // 用于存储活跃的li的索引
 const activeIndex = ref(0)
-
-// 点击赋值,控制active
-// 菜单与路由的映射关系
-
-const router = useRouter()
 
 // 头部导航菜单数据
 const menuList = ['Home', 'Work', 'Blog', 'About']
@@ -19,29 +24,41 @@ function handleActive(index: number, routeName: string) {
   router.push({ name: routeName.toLowerCase() })
 }
 
-// 控制 show 元素的透明度
-const isHovered = reactive<Record<number, boolean>>({})
 
+// 设置位置
+const mousePositions = reactive<Record<number, { x: number, y: number }>>({})
+function setMousePosition(index: number, x: number, y: number) {
+  mousePositions[index] = { x, y }
+}
 // 处理鼠标移动事件
-function handleMouseMove(event: MouseEvent, index: number) {
-  const element = event.target as HTMLElement
-  if (!element)
-    return
-  // 获取位置信息
-  const rect = element.getBoundingClientRect()
-  const offsetX = event.clientX - rect.left
-  const offsetY = event.clientY - rect.top
-  element.style.setProperty('--mouse-x', `${offsetX}px`)
-  element.style.setProperty('--mouse-y', `${offsetY}px`)
-  isHovered[index] = true
+function handleMouseMove(event: MouseEvent) {
+  liList.value.forEach((liItem, index) => {
+    const rect = liItem.getBoundingClientRect()
+    setMousePosition(index, event.clientX - rect.left, event.clientY - rect.top)
+  })
+}
+
+// 动态返回一个对象
+function liStyle(index: number) {
+  // 获取当前悬停元素位置
+  const pos = mousePositions[index]
+  if (pos) {
+    return {
+      '--mouse-x': pos ? `${pos.x}px` : '0px',
+      '--mouse-y': pos ? `${pos.y}px` : '0px',
+    }
+  }
+}
+
+function resetMousePosition(index: number) {
+  mousePositions[index] = { x: -100, y: -100 }
 }
 
 // 处理鼠标离开事件
-function handleMouseLeave(event: MouseEvent, index: number) {
-  const element = event.target as HTMLElement
-  element.style.setProperty('--mouse-x', `100px`)
-  element.style.setProperty('--mouse-y', `100px`)
-  isHovered[index] = false
+function handleMouseLeave() {
+  liList.value.forEach((_, index) => {
+    resetMousePosition(index)
+  })
 }
 </script>
 
@@ -49,15 +66,12 @@ function handleMouseLeave(event: MouseEvent, index: number) {
   <div class="head w-full h-14 px-10 py-0 z-99 ">
     <div class="main w-full">
       <img src="../assets/public/logo_text.svg" class="h-5">
-      <ul gap-3>
+      <ul gap-3 @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
         <template v-for="(item, index) in menuList" :key="index">
-          <li
-            class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
-            @click="handleActive(index, item)" @mousemove="handleMouseMove($event, index)"
-            @mouseleave="handleMouseLeave($event, index)"
-          >
+          <li class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
+            @click="handleActive(index, item)" :style="liStyle(index)">
             {{ item }}
-            <div class="show" :style="{ opacity: isHovered[index] ? 1 : 0 }" />
+            <div class="show" />
           </li>
         </template>
       </ul>
@@ -139,19 +153,27 @@ function handleMouseLeave(event: MouseEvent, index: number) {
           }
         }
       }
+
+      .show {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        border-radius: var(--border);
+        pointer-events: none;
+        background: radial-gradient(var(--circle-size) circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.01), transparent 40%);
+        /* hover fill */
+      }
+
+      &:hover {
+        .show {
+          opacity: 1;
+        }
+      }
     }
   }
 
-  .show {
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    position: absolute;
-    border-radius: var(--border);
-    pointer-events: none;
-    background: radial-gradient(var(--circle-size) circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.01), transparent 40%);
-    /* hover fill */
-  }
+
 
   .logo {
     position: absolute;

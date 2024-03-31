@@ -41,6 +41,7 @@ const cardList = ref([
 
 // 用来动态存储鼠标位置
 const mousePositions = reactive<Record<number, { x: number, y: number }>>({})
+
 // 存储dom对象
 const cards = ref<HTMLElement[]>([])
 // 获取dom
