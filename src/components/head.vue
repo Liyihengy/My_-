@@ -17,12 +17,17 @@ function handleActive(index: number, routeName: string) {
   activeIndex.value = index
   router.push({ name: routeName.toLowerCase() })
 }
+
+const handleGoHome = () => {
+  router.push({ name: 'home' })
+
+}
 </script>
 
 <template>
   <div class="head w-full h-14 px-10 py-0 z-99 ">
     <div class="main w-full">
-      <img src="../assets/public/logo_text.svg" class="h-5">
+      <img src="../assets/public/logo_text.svg" class="h-5 cursor-pointer" @click="handleGoHome">
       <ul gap-3 @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
         <template v-for="(item, index) in menuList" :key="index">
           <li

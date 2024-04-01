@@ -2,7 +2,7 @@ $circle-size: 100px;
 $inset: 1px;
 $border: 9999px;
 
-
+// hover显示元素
 @mixin afterBefore-public-styles {
   content: '';
   position: absolute;
@@ -15,3 +15,14 @@ $border: 9999px;
   z-index: -1;
 }
 
+// 白色字体渐变
+@mixin titleBgc {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(180deg, #E8E8F6 0%, rgba(232, 232, 246, 0.72) 100%);
+  background-clip: text;
+  // 字体渐变蒙版
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

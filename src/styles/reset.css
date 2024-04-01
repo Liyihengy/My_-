@@ -171,8 +171,13 @@ body {
   color: #E8E8F6;
   font-family: Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow: scroll;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 
 a,
 a:hover {
