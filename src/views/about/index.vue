@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import useMousePosition from '@/hook/mouse-position'
 import frameWorkImage from '../../assets/about/abstract.svg'
 import componentMenImage from '../../assets/about/menu.svg'
 import projectsImage from '../../assets/about/pen.svg'
-
+import useMousePosition from '@/hook/mouse-position'
 
 const showCopy = ref(false)
 
@@ -32,29 +31,29 @@ const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.m
 const powerCard = ref([
   {
     title: '3',
-    desc: '工作年限'
+    desc: '工作年限',
   },
 
   {
     title: '3',
-    desc: '完整项目'
+    desc: '完整项目',
   },
 
   {
     title: '3',
-    desc: '随手笔记'
+    desc: '随手笔记',
   },
   {
     image: frameWorkImage,
-    desc: '随手笔记'
+    desc: '随手笔记',
   },
   {
     image: componentMenImage,
-    desc: '随手笔记'
+    desc: '随手笔记',
   },
   {
     image: projectsImage,
-    desc: '随手笔记'
+    desc: '随手笔记',
   },
 ])
 const { handleMouseMove: handleMouseMove1, handleMouseLeave: handleMouseLeave1, elementStyle: elementStyle1 } = useMousePosition('.powerCard')
@@ -64,18 +63,17 @@ const myDesc = ref([
     time: '❖ 2021.9 ~ 2023.01.09',
     name: {
       title: '浙江露熙科技有限公司',
-      desc: '产品UI设计师'
+      desc: '产品UI设计师',
     },
     desc: '青云 QingCloud 设计资产',
-  }
+  },
 ])
 
 const myList = ref([
   {
-    desc: '利用工程化思维沉淀完善且可落地的基础、业务、模式组件库及周边生态，覆盖 93% 产品线，规范设计产出、降低约 50% 验收成本、提升体验一致性与跨部门协作效率；'
-  }
+    desc: '利用工程化思维沉淀完善且可落地的基础、业务、模式组件库及周边生态，覆盖 93% 产品线，规范设计产出、降低约 50% 验收成本、提升体验一致性与跨部门协作效率；',
+  },
 ])
-
 </script>
 
 <template>
@@ -137,8 +135,9 @@ const myList = ref([
               </div>
               <a
                 class="magicalBtn c-#e8e8f6 lh-8 text-xs inline-block px-4 cursor-pointer rounded-full cursor-pointer"
-                :style="elementStyle(0)" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()"
-                href="https://cowtransfer.com/s/f9e5afada55844" target="_blank">
+                :style="elementStyle(0)" href="https://cowtransfer.com/s/f9e5afada55844" target="_blank"
+                @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()"
+              >
                 查看&下载
                 <div class="show" />
               </a>
@@ -147,35 +146,47 @@ const myList = ref([
         </div>
       </div>
     </div>
-    <div class="about-middle w-full mt-10 mb-20" @mousemove="handleMouseMove1($event)"
-      @mouseleave="handleMouseLeave1()">
+    <div
+      class="about-middle w-full mt-10 mb-20" @mousemove="handleMouseMove1($event)"
+      @mouseleave="handleMouseLeave1()"
+    >
       <template v-for="(item, index) in powerCard" :key="index">
         <div class="powerCard" :style="elementStyle1(index)">
           <div class="content text-base c-#e8e8f6 flex flex-col gap-3 p-4">
-            <div class="card-title" v-if="item.title">{{ item.title }}</div>
-            <div v-if="item.image" :style="{ backgroundImage: `url(${item.image})` }" class="w-8 h-8 content-image">
+            <div v-if="item.title" class="card-title">
+              {{ item.title }}
             </div>
-            <div class="card-desc c-#b3b3c1 text-xs">{{ item.desc }}</div>
+            <div v-if="item.image" :style="{ backgroundImage: `url(${item.image})` }" class="w-8 h-8 content-image" />
+            <div class="card-desc c-#b3b3c1 text-xs">
+              {{ item.desc }}
+            </div>
           </div>
           <div class="show" />
         </div>
       </template>
-
     </div>
     <div class="bottom w-full">
       <template v-for="(item, index) in myDesc" :key="index">
         <div class="item text-sm c-#B3B3C1">
-          <div class="time ">{{ item.time }}</div>
+          <div class="time ">
+            {{ item.time }}
+          </div>
           <div class="name flex flex-col gap-1">
             <a class="company c-#b3b3c1">{{ item.name.title }}↗</a>
-            <div class="job text-xs c-#62616F lh-7">{{ item.name.desc }}</div>
+            <div class="job text-xs c-#62616F lh-7">
+              {{ item.name.desc }}
+            </div>
           </div>
           <div class="project-experience flex flex-col gap-4">
-            <div class="title font-500 c-#e8e8f6">{{ item.desc }}</div>
+            <div class="title font-500 c-#e8e8f6">
+              {{ item.desc }}
+            </div>
             <div class="desc w-full">
               <ul>
-                <template v-for="(item, index) in myList" :key="index">
-                  <li class="listStyle lh-7">{{ item.desc }}</li>
+                <template v-for="(listItem, listIndex) in myList" :key="listIndex">
+                  <li class="listStyle lh-7">
+                    {{ listItem.desc }}
+                  </li>
                 </template>
               </ul>
             </div>

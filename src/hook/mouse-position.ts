@@ -10,8 +10,6 @@ interface MousePositions {
   [key: number]: MousePosition
 }
 
-
-
 // 自定义hook
 function useMousePosition(selector: string) {
   // 承接dom数据
