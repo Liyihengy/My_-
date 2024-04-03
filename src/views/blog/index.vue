@@ -1,9 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="blog">
-    blog
-  </div>
+  <div class="main">main</div>
 </template>
 
 <style lang="scss" scoped></style>

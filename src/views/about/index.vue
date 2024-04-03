@@ -395,10 +395,6 @@ const myList = ref([
       display: grid;
       grid-template-columns: 1fr 1fr 3fr;
       gap: 16px;
-
-      .project-experience {
-        .desc {}
-      }
     }
   }
 }
