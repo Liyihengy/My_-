@@ -88,7 +88,7 @@ summary {
 }
 
 li {
-  list-style: none;
+  list-style: circle ;
 }
 
 h1,
@@ -181,7 +181,7 @@ body::-webkit-scrollbar {
 
 a,
 a:hover {
-  color: #333;
+  color: #E8E8F6;
 }
 
 * {
