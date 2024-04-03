@@ -18,9 +18,8 @@ function handleActive(index: number, routeName: string) {
   router.push({ name: routeName.toLowerCase() })
 }
 
-const handleGoHome = () => {
+function handleGoHome() {
   router.push({ name: 'home' })
-
 }
 </script>
 
@@ -113,14 +112,7 @@ const handleGoHome = () => {
       }
 
       .show {
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        position: absolute;
-        border-radius: var(--border);
-        pointer-events: none;
-        background: radial-gradient(var(--circle-size) circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.01), transparent 40%);
-        /* hover fill */
+        @include showStyle;
       }
 
       &:hover {

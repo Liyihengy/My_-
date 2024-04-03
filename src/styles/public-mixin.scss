@@ -1,4 +1,4 @@
-$circle-size: 100px;
+$circle-size: 400px;
 $inset: 1px;
 $border: 9999px;
 
@@ -9,9 +9,8 @@ $border: 9999px;
   // 原有的高度上加2
   width: calc(100% + #{$inset}* 2);
   height: calc(100% + #{$inset}* 2);
-  // 这里是befalor和after的样式
   // 所有四边均向外偏移1像素
-  inset: calc(0 - #{$inset});
+  inset: -1px;
   z-index: -1;
 }
 
@@ -25,4 +24,20 @@ $border: 9999px;
   // 字体渐变蒙版
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+// show
+@mixin showStyle {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 6px;
+  pointer-events: none;
+  background: radial-gradient($circle-size circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.01), transparent 40%);
+  /* hover fill */
 }

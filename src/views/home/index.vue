@@ -253,13 +253,7 @@ const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.c
         }
 
         .show {
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          opacity: 0;
-          border-radius: var(--border);
-          pointer-events: none;
-          background: radial-gradient(var(--circle-size) circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.01), transparent 40%);
+          @include showStyle;
         }
 
         &:hover {
@@ -278,8 +272,6 @@ const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.c
   }
 }
 
-
-
 @keyframes l12 {
 
   // 图片位置发生变化
@@ -288,6 +280,4 @@ const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.c
     background-position: calc(100% / 3) 0, calc(100% / -3) 100%;
   }
 }
-
-
 </style>
