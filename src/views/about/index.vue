@@ -172,7 +172,9 @@ const myList = ref([
             {{ item.time }}
           </div>
           <div class="name flex flex-col gap-1">
-            <a class="company c-#b3b3c1">{{ item.name.title }}↗</a>
+            <div class="company c-#b3b3c1 cursor-pointer">
+              {{ item.name.title }}↗
+            </div>
             <div class="job text-xs c-#62616F lh-7">
               {{ item.name.desc }}
             </div>

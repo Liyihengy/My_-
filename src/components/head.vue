@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import useMousePosition from '@/hook/mouse-position'
 
 const { handleMouseMove, handleMouseLeave, elementStyle } = useMousePosition('.magical')
 const router = useRouter()
+const route = useRoute()
 
 // 控制动态样式
-// 用于存储活跃的li的索引
-const activeIndex = ref(0)
-
 // 头部导航菜单数据
 const menuList = ['Home', 'Work', 'Blog', 'About']
-function handleActive(index: number, routeName: string) {
+
+function isActiveRoute(menuItem: string) {
+  return route.name === menuItem.toLowerCase()
+}
+
+function handleActive(routeName: string) {
   // 记录索引
-  activeIndex.value = index
   router.push({ name: routeName.toLowerCase() })
 }
 
@@ -30,8 +32,8 @@ function handleGoHome() {
       <ul gap-3 @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()">
         <template v-for="(item, index) in menuList" :key="index">
           <li
-            class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: activeIndex === index }"
-            :style="elementStyle(index)" @click="handleActive(index, item)"
+            class="magical btn rounded-full py-1.5 px-4 cursor-pointer" :class="{ active: isActiveRoute(item) }"
+            :style="elementStyle(index)" @click="handleActive(item)"
           >
             {{ item }}
             <div class="show" />
